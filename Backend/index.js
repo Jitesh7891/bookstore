@@ -3,12 +3,13 @@ const app=express()
 const port=4000
 var cors=require('cors')
 const mongoose=require('mongoose')
-
+const dotenv = require('dotenv');
+dotenv.config();
 
 app.use(cors())
 app.use(express.json())
 
-const mongouri="mongodb+srv://jake:newjake@cluster0.w095wjm.mongodb.net/"
+const mongouri=process.env.MONGO_URL;
 
 const connect=async()=>{
     await mongoose.connect(mongouri)

@@ -2,11 +2,14 @@ const User=require('../models/User')
 const express=require('express')
 // const mongoose=require('mongoose')
 const bcrypt=require('bcryptjs')
-// var jwt=require('jsonwebtoken')
+var jwt=require('jsonwebtoken')
 const router=express.Router();
 const { body, validationResult } = require('express-validator');
 const validateInputs = require('../middleware/validateinput');
+const dotenv = require('dotenv');
+dotenv.config();
 
+const token=process.env.JWT_SECRET;
 
 router.post(
     '/login',
@@ -16,28 +19,38 @@ router.post(
         body('password').isLength({min:4}).withMessage('Username must be at least 4 characters'),
     ],
     async(req,res)=>{
-       
+        
+        let success=false;
+        // console.log('hey ',token)
+
         const errors=validationResult(req);
         if(!errors.isEmpty()){
-                return res.status(400).json({ errors: errors.array() });
+                return res.status(400).json({success, errors: errors.array() });
               
         }
         try{
-            const{username}=req.body;
+        const{username}=req.body;
         const user = await User.findOne({username});
         if(!user){
-            return res.status(400).send("User not found")
+            return res.status(400).json({success,message:"User not found"})
         }
         const passwordcompare=await bcrypt.compare(req.body.password,user.password);
 
         if(!passwordcompare){
-            return res.status(400).send("Invalid password")
+            return res.status(400).json({success,message:"Invalid password"})
         }
-
-        res.send("Login succesful")
+        success=true;
+        const data={
+            user:{
+               username:user.username,
+               email:user.email 
+            }
+        }
+        const authtoken=jwt.sign(data,token)
+        res.json({success,authtoken})
     }catch(error){
         console.log(error.message)
-        return res.status(500).json({error:error.message})
+        return res.status(500).json({success,error:error.message})
     }
     });
 

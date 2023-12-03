@@ -6,14 +6,24 @@ export default function Login(){
   const passwordRef = useRef(null);
       
   
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
+
+    e.preventDefault()
           const username = usernameRef.current.value;
           const password = passwordRef.current.value;
-          e.preventDefault();
-          // Add your login logic here
-          console.log('Username:', username);
-          console.log('Password:', password);
+
+          const response=await fetch("http://127.0.0.1:4000/api/login",{
+            method:"POST",
+            headers: {
+              'Content-Type':
+                  'application/json;charset=utf-8'
+          },
+          body:JSON.stringify({username,password})
+          }) 
+          const jsonresponse=await response.json()
+          console.log(jsonresponse)
         }
+
 
   return (
     <div className="h-[100vh] flex items-center justify-center bg-gradient-to-r from-blue-200 to-white">
