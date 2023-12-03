@@ -27,6 +27,7 @@ const RegisterForm = () => {
       confirmPasswordRef.current.value = '';
     } else {
       // Passwords do not match
+      alert("Passwords dont match")
       console.error('Passwords do not match');
     }
   };

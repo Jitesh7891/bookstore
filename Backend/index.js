@@ -4,6 +4,10 @@ const port=4000
 var cors=require('cors')
 const mongoose=require('mongoose')
 
+
+app.use(cors())
+app.use(express.json())
+
 const mongouri="mongodb+srv://jake:newjake@cluster0.w095wjm.mongodb.net/"
 
 const connect=async()=>{
@@ -11,15 +15,11 @@ const connect=async()=>{
     console.log("Now connected to mongo")
 }
 
-app.get("/",(req,res)=>{
-    res.send("Hey there!")
-})
+connect();
 
-app.use(cors)
+app.use("/api",require('./routes/register'))
+app.use("/api",require('./routes/login'))
 
-app.use(express.json())
-
-connect()
 app.listen(port,()=>{
     console.log(`App listening on port http://127.0.0.1:${port}`)
 })

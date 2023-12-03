@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useRef } from 'react'
 
-export default function Login() {
+export default function Login(){
 
-        const [username, setUsername] = useState('');
-        const [password, setPassword] = useState('');
+  const usernameRef = useRef(null);
+  const passwordRef = useRef(null);
       
-        const handleSubmit = (e) => {
+  
+  const handleSubmit = (e) => {
+          const username = usernameRef.current.value;
+          const password = passwordRef.current.value;
           e.preventDefault();
           // Add your login logic here
           console.log('Username:', username);
@@ -24,8 +27,7 @@ export default function Login() {
           type="text"
           id="username"
           name="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          ref={usernameRef}
           className="w-full border p-2 rounded"
           required
         />
@@ -38,8 +40,7 @@ export default function Login() {
           type="password"
           id="password"
           name="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          ref={passwordRef}
           className="w-full border p-2 rounded"
           required
         />
