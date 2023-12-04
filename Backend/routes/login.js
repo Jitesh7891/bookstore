@@ -40,6 +40,8 @@ router.post(
         if(!passwordcompare){
             return res.status(400).json({success,message:"Invalid password"})
         }
+        res.setHeader('Access-Control-Allow-Origin', '*');
+        res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
         success=true;
         const data={
             user:{
