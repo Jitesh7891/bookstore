@@ -1,8 +1,18 @@
 // RegisterForm.js
 
-import React, { useRef } from 'react';
+import React, { useRef,useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const RegisterForm = () => {
+  const navigate=useNavigate();
+  
+  useEffect(()=>{
+    if(sessionStorage.getItem('token')){
+      navigate("/")
+    }
+  },[])
+  
+
   const usernameRef = useRef(null);
   const passwordRef = useRef(null);
   const confirmPasswordRef = useRef(null);

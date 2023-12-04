@@ -1,11 +1,23 @@
-import React, { useRef } from 'react'
+import React, { useRef,useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
+import { setUser } from '../state/action-creator';
+import { useDispatch } from 'react-redux';
+import { actioncreators } from '../state';
 
 export default function Login(){
+  const dispatch=useDispatch();
+  const navigate=useNavigate();
+
+  useEffect(()=>{
+    if(sessionStorage.getItem('token')){
+    // navigate("/")
+  }
+},[])
 
   const usernameRef = useRef(null);
   const passwordRef = useRef(null);
       
-  
+
   const handleSubmit = async(e) => {
 
     e.preventDefault()
@@ -22,8 +34,29 @@ export default function Login(){
           }) 
           const jsonresponse=await response.json()
           console.log(jsonresponse)
+          if(jsonresponse.success){
+            const token=jsonresponse.authtoken
+            sessionStorage.setItem('token',token);
+            
+            const userdata=await fetch('http://127.0.0.1:4000/api/getuser'
+            ,{
+              method:"POST",
+              headers:{
+                'Content-Type':'application/json;charset=utf-8',
+                'authtoken':token
+              }
+            }
+            )
+            const response=await userdata.json()
+            console.log(response.username,response.email)
+            try{
+            dispatch(actioncreators.setUser(response.username,response.email))
+            }catch(error){
+              console.log(error.message)
+            }
+            navigate("/")
+          }
         }
-
 
   return (
     <div className="h-[100vh] flex items-center justify-center bg-gradient-to-r from-blue-200 to-white">

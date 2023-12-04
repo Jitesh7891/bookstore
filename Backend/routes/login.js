@@ -7,6 +7,7 @@ const router=express.Router();
 const { body, validationResult } = require('express-validator');
 const validateInputs = require('../middleware/validateinput');
 const dotenv = require('dotenv');
+const fetchuser = require('../middleware/fetchuser');
 dotenv.config();
 
 const token=process.env.JWT_SECRET;
@@ -53,5 +54,9 @@ router.post(
         return res.status(500).json({success,error:error.message})
     }
     });
+
+    router.post('/getuser',
+        fetchuser
+    )
 
 module.exports=router
