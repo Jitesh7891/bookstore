@@ -6,7 +6,13 @@ const mongoose=require('mongoose')
 const dotenv = require('dotenv');
 dotenv.config();
 
-app.use(cors())
+app.use(cors(
+    {
+        // origin: ["https://deploy-mern-frontend.vercel.app"],
+        methods: ["POST", "GET"],
+        credentials: true
+    }
+));
 app.use(express.json())
 
 const mongouri=process.env.MONGO_URL;
