@@ -24,7 +24,7 @@ export default function Login(){
           const username = usernameRef.current.value;
           const password = passwordRef.current.value;
 
-          const response=await fetch("http://127.0.0.1:4000/api/login",{
+          const response=await fetch("https://bookstore-api-silk.vercel.app/api/login",{
             method:"POST",
             headers: {
               'Content-Type':
@@ -38,7 +38,7 @@ export default function Login(){
             const token=jsonresponse.authtoken
             sessionStorage.setItem('token',token);
             
-            const userdata=await fetch('http://127.0.0.1:4000/api/getuser'
+            const userdata=await fetch('https://bookstore-api-silk.vercel.app/api/getuser'
             ,{
               method:"POST",
               headers:{
