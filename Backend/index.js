@@ -8,7 +8,7 @@ dotenv.config();
 
 // Use the cors middleware with specific origin(s)
 const corsOptions = {
-    origin: 'https://bookstore-es0x.onrender.com/',
+    origin: 'https://bookstore-bay-delta.vercel.app/',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
   };
 
