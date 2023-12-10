@@ -6,15 +6,13 @@ const mongoose=require('mongoose')
 const dotenv = require('dotenv');
 dotenv.config();
 
-app.use(cors(
-    {
-        // origin: ["https://deploy-mern-frontend.vercel.app"],
-        methods: ["POST", "GET"],
-        credentials: true
-    }
-));
+// Use the cors middleware with specific origin(s)
+const corsOptions = {
+    origin: 'https://bookstore-es0x.onrender.com/',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  };
 
-app.use(cors())
+  app.use(cors(corsOptions));
 app.use(express.json())
 
 const mongouri=process.env.MONGO_URL;
