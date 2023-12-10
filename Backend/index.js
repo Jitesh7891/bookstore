@@ -6,15 +6,15 @@ const mongoose=require('mongoose')
 const dotenv = require('dotenv');
 dotenv.config();
 
-// app.use(cors(
-//     {
-//         // origin: ["https://deploy-mern-frontend.vercel.app"],
-//         methods: ["POST", "GET"],
-//         credentials: true
-//     }
-// ));
+app.use(cors(
+    {
+        // origin: ["https://deploy-mern-frontend.vercel.app"],
+        methods: ["POST", "GET"],
+        credentials: true
+    }
+));
 
-app.use(cors())
+// app.use(cors())
 app.use(express.json())
 
 const mongouri=process.env.MONGO_URL;
@@ -25,6 +25,10 @@ const connect=async()=>{
 }
 
 connect();
+
+app.get('/', (req, res) => {
+    res.send('Hello');
+});
 
 app.use("/api",require('./routes/register'))
 app.use("/api",require('./routes/login'))
