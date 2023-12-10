@@ -24,7 +24,7 @@ export default function Login(){
           const username = usernameRef.current.value;
           const password = passwordRef.current.value;
 
-          const response=await fetch("https://bookstore-api.onrender.com/api/login",{
+          const response=await fetch("https://bookstore-api-n7i3.onrender.com/api/login",{
             method:"POST",
             headers: {
               'Content-Type':
@@ -38,7 +38,7 @@ export default function Login(){
             const token=jsonresponse.authtoken
             sessionStorage.setItem('token',token);
             
-            const userdata=await fetch('https://bookstore-api.onrender.com/api/getuser'
+            const userdata=await fetch('https://bookstore-api-n7i3.onrender.com/api/getuser'
             ,{
               method:"POST",
               headers:{
